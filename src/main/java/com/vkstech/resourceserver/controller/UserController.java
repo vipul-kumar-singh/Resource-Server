@@ -1,5 +1,6 @@
 package com.vkstech.resourceserver.controller;
 
+import com.vkstech.resourceserver.constants.ResponseMessages;
 import com.vkstech.resourceserver.dto.AddressDto;
 import com.vkstech.resourceserver.model.Address;
 import com.vkstech.resourceserver.service.UserService;
@@ -43,20 +44,20 @@ public class UserController {
 
         Address userAddress = userService.addNewAddress(addressDto, principal.getName());
         if (userAddress == null)
-            return new ResponseEntity(new ResponseObject("Address could not be saved"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new ResponseObject(ResponseMessages.ADDRESS_SAVE_FAILURE), HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity(new ResponseObject("Address saved successfully", userAddress), HttpStatus.OK);
+        return new ResponseEntity(new ResponseObject(ResponseMessages.ADDRESS_SAVE_SUCCESS, userAddress), HttpStatus.OK);
     }
 
     @GetMapping("/address/all")
-    public ResponseEntity getAllAddress(Principal principal){
+    public ResponseEntity getAllAddress(Principal principal) {
         LOGGER.info("UserController getAllAddress...");
 
         List<Address> addressList = userService.getAllAddress(principal.getName());
 
-        if (addressList==null || addressList.isEmpty())
-            return new ResponseEntity(new ResponseObject("No address found"), HttpStatus.BAD_REQUEST);
+        if (addressList == null || addressList.isEmpty())
+            return new ResponseEntity(new ResponseObject(ResponseMessages.ADDRESS_FETCH_FAILURE), HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity(new ResponseObject("Addresses fetched successfully", addressList), HttpStatus.OK);
+        return new ResponseEntity(new ResponseObject(ResponseMessages.ADDRESS_FETCH_SUCCESS, addressList), HttpStatus.OK);
     }
 }

@@ -34,6 +34,7 @@ public class UserService {
     }
 
     public List<Address> getAllAddress(String username) {
+        LOGGER.info("UserService getAllAddress...");
         return addressRepository.findByUsername(username);
     }
 }
