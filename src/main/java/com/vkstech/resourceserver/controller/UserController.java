@@ -13,12 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.security.Principal;
 import java.util.List;
 
@@ -59,5 +57,22 @@ public class UserController {
             return new ResponseEntity(new ResponseObject(ResponseMessages.ADDRESS_FETCH_FAILURE), HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity(new ResponseObject(ResponseMessages.ADDRESS_FETCH_SUCCESS, addressList), HttpStatus.OK);
+    }
+
+    @PutMapping("/address/{id}")
+    public ResponseEntity editAddress(@PathVariable("id") @NotNull(message = "id cannot be null") Long id,
+                                      @Valid @RequestBody AddressDto addressDto,
+                                      BindingResult bindingResult,
+                                      Principal principal) {
+        LOGGER.info("UserController editAddress...");
+
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> fieldErrors = bindingResult.getAllErrors();
+            for (ObjectError error : fieldErrors) {
+                return new ResponseEntity(new ResponseObject(error.getDefaultMessage()), HttpStatus.BAD_REQUEST);
+            }
+        }
+
+        return userService.editAddress(id, addressDto, principal.getName());
     }
 }

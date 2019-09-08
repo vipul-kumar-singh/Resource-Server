@@ -8,4 +8,7 @@ public interface ResponseMessages {
     String ADDRESS_FETCH_SUCCESS = "Addresses fetched successfully";
     String ACCESS_DENIED = "Access Denied";
     String INVALID_ACCESS_TOKEN = "Invalid access token";
+    String ADDRESS_NOT_EXISTS = "Address does not exists";
+    String ADDRESS_UPDATE_SUCCESS = "Address updated successfully";
+    String ADDRESS_UPDATE_FAILURE = "Address cannot be updated";
 }

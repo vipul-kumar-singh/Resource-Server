@@ -10,4 +10,6 @@ import java.util.List;
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
     List<Address> findByUsernameOrderByUpdatedDateAsc(String username);
+
+    Address findByIdAndUsername(Long id, String username);
 }
