@@ -75,4 +75,12 @@ public class UserController {
 
         return userService.editAddress(id, addressDto, principal.getName());
     }
+
+    @DeleteMapping("/address/{id}")
+    public ResponseEntity deleteAddress(@PathVariable("id") @NotNull(message = "id cannot be null") Long id,
+                                      Principal principal) {
+        LOGGER.info("UserController deleteAddress...");
+
+        return userService.deleteAddress(id, principal.getName());
+    }
 }

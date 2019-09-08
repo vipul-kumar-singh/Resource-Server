@@ -11,4 +11,6 @@ public interface ResponseMessages {
     String ADDRESS_NOT_EXISTS = "Address does not exists";
     String ADDRESS_UPDATE_SUCCESS = "Address updated successfully";
     String ADDRESS_UPDATE_FAILURE = "Address cannot be updated";
+    String ADDRESS_DELETE_SUCCESS = "Address deleted successfully";
+    String ADDRESS_DELETE_FAILURE = "Address cannot be deleted";
 }

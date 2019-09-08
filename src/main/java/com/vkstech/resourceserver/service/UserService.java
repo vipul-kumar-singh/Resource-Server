@@ -44,7 +44,7 @@ public class UserService {
 
     public ResponseEntity editAddress(Long id, AddressDto addressDto, String username) {
 
-        Address address = addressRepository.findByIdAndUsername(id,username);
+        Address address = addressRepository.findByIdAndUsername(id, username);
         if (address == null)
             return new ResponseEntity(new ResponseObject(ResponseMessages.ADDRESS_NOT_EXISTS), HttpStatus.BAD_REQUEST);
 
@@ -56,10 +56,24 @@ public class UserService {
 
         try {
             addressRepository.save(address);
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity(new ResponseObject(ResponseMessages.ADDRESS_UPDATE_FAILURE), HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity(new ResponseObject(ResponseMessages.ADDRESS_UPDATE_SUCCESS, address), HttpStatus.OK);
+    }
+
+    public ResponseEntity deleteAddress(Long id, String username) {
+        Address address = addressRepository.findByIdAndUsername(id, username);
+        if (address == null)
+            return new ResponseEntity(new ResponseObject(ResponseMessages.ADDRESS_NOT_EXISTS), HttpStatus.BAD_REQUEST);
+
+        try {
+            addressRepository.deleteByIdAndUsername(id, username);
+            return new ResponseEntity(new ResponseObject(ResponseMessages.ADDRESS_DELETE_SUCCESS), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(new ResponseObject(ResponseMessages.ADDRESS_DELETE_FAILURE), HttpStatus.BAD_REQUEST);
+        }
+
     }
 }
